@@ -593,7 +593,7 @@ var ndk = ndkConfig{
 	"arm": {
 		arch:        "arm",
 		abi:         "armeabi-v7a",
-		minAPI:      16,
+		minAPI:      24,
 		toolPrefix:  "arm-linux-androideabi",
 		clangPrefix: "armv7a-linux-androideabi",
 	},
