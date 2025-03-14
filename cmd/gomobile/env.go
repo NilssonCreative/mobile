@@ -167,6 +167,7 @@ func envInit() (err error) {
 		if buildAndroidAPI < minAndroidAPI {
 			return fmt.Errorf("gomobile requires Android API level >= %d", minAndroidAPI)
 		}
+		fmt.Println("buildAndroidAPI", buildAndroidAPI)
 		for arch, toolchain := range ndk {
 			clang := toolchain.Path(ndkRoot, "clang")
 			clangpp := toolchain.Path(ndkRoot, "clang++")
@@ -313,6 +314,7 @@ func checkNDKRoot(ndkRoot string, targets []targetInfo) error {
 	if err := decoder.Decode(&supportedVersions); err != nil {
 		return err
 	}
+	fmt.Printf("supportedVersions: %v\n", supportedVersions)
 	if supportedVersions.Min > buildAndroidAPI ||
 		supportedVersions.Max < buildAndroidAPI {
 		return fmt.Errorf("unsupported API version %d (not in %d..%d)", buildAndroidAPI, supportedVersions.Min, supportedVersions.Max)
@@ -340,7 +342,7 @@ func checkNDKRoot(ndkRoot string, targets []targetInfo) error {
 
 // compatibleNDKRoots searches the side-by-side NDK dirs for compatible SDKs.
 func compatibleNDKRoots(ndkForest string, targets []targetInfo) ([]string, error) {
-	ndkDirs, err := ioutil.ReadDir(ndkForest)
+	ndkDirs, err := os.ReadDir(ndkForest)
 	if err != nil {
 		return nil, err
 	}

@@ -25,7 +25,6 @@ import (
 )
 
 func goAndroidBuild(pkg *packages.Package, targets []targetInfo) (map[string]bool, error) {
-	binres.MinSDK = 24
 	ndkRoot, err := ndkRoot(targets...)
 	if err != nil {
 		return nil, err

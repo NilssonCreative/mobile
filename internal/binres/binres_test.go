@@ -10,7 +10,6 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"math"
 	"os"
@@ -108,7 +107,7 @@ func compareBytes(a, b []byte) error {
 }
 
 func TestBootstrap(t *testing.T) {
-	bin, err := ioutil.ReadFile("testdata/bootstrap.bin")
+	bin, err := os.ReadFile("testdata/bootstrap.bin")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -218,7 +217,7 @@ func TestEncode(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	bin, err := ioutil.ReadFile("testdata/bootstrap.bin")
+	bin, err := os.ReadFile("testdata/bootstrap.bin")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -319,7 +318,7 @@ func compareElements(have, want *XML) error {
 				// but following same format of all other like-types appears to work correctly.
 				// BUG(dskinner) this check is brittle as it will skip over any attribute in
 				// bootstrap.xml that has value == MinSDK.
-				if attr.TypedValue.Value == MinSDK {
+				if attr.TypedValue.Value == uint32(MinSDK) {
 					continue
 				}
 				fmt.Fprintf(buf, "attrs don't match\nhave: %+v\nwant: %+v\n", attr, bttr)
