@@ -37,7 +37,7 @@ func goAndroidBuild(pkg *packages.Package, targets []targetInfo) (map[string]boo
 	dir := filepath.Dir(pkg.GoFiles[0])
 
 	manifestPath := filepath.Join(dir, "AndroidManifest.xml")
-	manifestData, err := ioutil.ReadFile(manifestPath)
+	manifestData, err := os.ReadFile(manifestPath)
 	if err != nil {
 		if !os.IsNotExist(err) {
 			return nil, err
@@ -47,7 +47,8 @@ func goAndroidBuild(pkg *packages.Package, targets []targetInfo) (map[string]boo
 		buf.WriteString(`<?xml version="1.0" encoding="utf-8"?>`)
 		err := manifestTmpl.Execute(buf, manifestTmplData{
 			// TODO(crawshaw): a better package path.
-			JavaPkgPath: "org.golang.todo." + libName,
+			//JavaPkgPath: "org.golang.todo." + libName,
+			JavaPkgPath: "org.golang." + libName,
 			Name:        strings.Title(appName),
 			LibName:     libName,
 		})

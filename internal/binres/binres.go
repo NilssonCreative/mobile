@@ -248,6 +248,20 @@ func UnmarshalXML(r io.Reader, withIcon bool) (*XML, error) {
 					xml.Attr{
 						Name: xml.Name{
 							Space: "",
+							Local: "compileSdkVersion",
+						},
+						Value: fmt.Sprintf("%v", TargetSDK),
+					},
+					xml.Attr{
+						Name: xml.Name{
+							Space: "",
+							Local: "compileSdkVersionCodename",
+						},
+						Value: "15",
+					},
+					xml.Attr{
+						Name: xml.Name{
+							Space: "",
 							Local: "platformBuildVersionCode",
 						},
 						Value: fmt.Sprintf("%v", TargetSDK),
@@ -257,7 +271,7 @@ func UnmarshalXML(r io.Reader, withIcon bool) (*XML, error) {
 							Space: "",
 							Local: "platformBuildVersionName",
 						},
-						Value: "14.0.0",
+						Value: "15",
 					})
 
 				q = append(q, ltoken{tkn, line})
@@ -269,14 +283,14 @@ func UnmarshalXML(r io.Reader, withIcon bool) (*XML, error) {
 							Local: "uses-sdk",
 						},
 						Attr: []xml.Attr{
-							xml.Attr{
+							{
 								Name: xml.Name{
 									Space: androidSchema,
 									Local: "minSdkVersion",
 								},
 								Value: fmt.Sprintf("%v", MinSDK),
 							},
-							xml.Attr{
+							{
 								Name: xml.Name{
 									Space: androidSchema,
 									Local: "targetSdkVersion",

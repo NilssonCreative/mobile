@@ -30,27 +30,27 @@ func runVersion(cmd *command) (err error) {
 	// source code in GOPATH. If they don't match, currently there is no
 	// way to reliably identify the revision number this binary was built
 	// against.
-	version, err := func() (string, error) {
-		bin, err := exec.LookPath(os.Args[0])
-		if err != nil {
-			return "", err
-		}
-		bindir := filepath.Dir(bin)
-		cmd := exec.Command("go", "list", "-f", "{{.Stale}}", "golang.org/x/mobile/cmd/gomobile")
-		cmd.Env = append(os.Environ(), "GOBIN="+bindir)
-		out, err := cmd.CombinedOutput()
-		if err != nil {
-			return "", fmt.Errorf("cannot test gomobile binary: %v, %s", err, out)
-		}
-		if strings.TrimSpace(string(out)) != "false" {
-			return "", fmt.Errorf("binary is out of date, re-install it")
-		}
-		return mobileRepoRevision()
-	}()
-	if err != nil {
-		fmt.Printf("gomobile version unknown: %v\n", err)
-		return nil
-	}
+	// version, err := func() (string, error) {
+	// 	bin, err := exec.LookPath(os.Args[0])
+	// 	if err != nil {
+	// 		return "", err
+	// 	}
+	// 	bindir := filepath.Dir(bin)
+	// 	cmd := exec.Command("go", "list", "-f", "{{.Stale}}", "golang.org/x/mobile/cmd/gomobile")
+	// 	cmd.Env = append(os.Environ(), "GOBIN="+bindir)
+	// 	out, err := cmd.CombinedOutput()
+	// 	if err != nil {
+	// 		return "", fmt.Errorf("cannot test gomobile binary: %v, %s", err, out)
+	// 	}
+	// 	if strings.TrimSpace(string(out)) != "false" {
+	// 		return "", fmt.Errorf("binary is out of date, re-install it")
+	// 	}
+	// 	return mobileRepoRevision()
+	// }()
+	// if err != nil {
+	// 	fmt.Printf("gomobile version unknown: %v\n", err)
+	// 	return nil
+	// }
 
 	// Supported platforms
 	platforms := "android"
@@ -60,7 +60,7 @@ func runVersion(cmd *command) (err error) {
 
 	androidapi, _ := sdkpath.AndroidAPIPath(buildAndroidAPI)
 
-	fmt.Printf("gomobile version %s (%s); androidSDK=%s\n", version, platforms, androidapi)
+	fmt.Printf("(%s); androidSDK=%s\n", platforms, androidapi)
 	return nil
 }
 
